@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DTU Bus Route Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    #bus-info {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Check DTU Bus Route</h1>
+  <input type="text" id="routeInput" placeholder="Enter bus number, e.g., 753" />
+  <button onclick="getBusRoute()">Search</button>
+
+  <div id="bus-info"></div>
+
+  <script>
+    function getBusRoute() {
+      const route = document.getElementById("routeInput").value.trim();
+      if (!route) {
+        alert("Please enter a bus number.");
+        return;
+      }
+
+      const proxyUrl = "https://script.google.com/macros/s/AKfycbxPYccigMMkJrQzCTtiCkG9oIsOR2q5D-qWq-U_AuhE1rDHwiXcwS_tLwo0ZfdMqo3M/exec";
+      const fullUrl = `${proxyUrl}?route=${route}`;
+
+      fetch(fullUrl)
+        .then(response => response.json())
+        .then(data => {
+          const busInfoDiv = document.getElementById("bus-info");
+
+          if (!data || !Array.isArray(data) || data.length === 0 || !data[0]) {
+            busInfoDiv.innerHTML = "<p>No route found or invalid response.</p>";
+            return;
+          }
+
+          const routeData = data[0];
+          const stops = routeData.stops || [];
+
+          busInfoDiv.innerHTML = `
+            <h2>Route: ${routeData.route_number}</h2>
+            <p><strong>From:</strong> ${routeData.origin}</p>
+            <p><strong>To:</strong> ${routeData.destination}</p>
+            <h3>Stops:</h3>
+            <ul>${stops.map(stop => `<li>${stop}</li>`).join("")}</ul>
+          `;
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("bus-info").innerHTML = `<p>Error: ${error.message}</p>`;
+        });
+    }
+  </script>
+</body>
+</html>
