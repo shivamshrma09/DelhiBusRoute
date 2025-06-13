@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MetroDekho</title>
+  <title>BusDekho</title>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet" />
   <style>
+
+
     :root {
       --primary-green: #228B22;
       --accent-orange: #FF8C00;
@@ -17,17 +19,20 @@
       --border-gray: #E0E0E0;
       --font-main: 'Poppins', sans-serif;
     }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: var(--font-main);
       background: var(--bg-light);
       color: var(--text-dark);
       padding-bottom: 60px;
     }
+
     .head {
       display: flex;
       justify-content: space-between;
@@ -37,9 +42,11 @@
       color: white;
       box-shadow: 0px 8px 0px 0px lightgray;
     }
+
     .name h1 {
       font-size: 24px;
     }
+
     .btn button {
       margin-left: 10px;
       padding: 8px 14px;
@@ -51,18 +58,22 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     .btn .login,
     .btn .singup {
       background-color: var(--alert-red);
     }
+
     .btn .login:hover,
     .btn .singup:hover {
       background-color: var(--primary-green);
       transform: scale(1.1);
     }
+
     .btn button:hover {
       background-color: var(--accent-orange);
     }
+
     .card {
       background-color: var(--bg-light);
       width: 95%;
@@ -70,28 +81,32 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      min-height: 350px;
-      max-width: 500px;
+      height: 80vw;
     }
+
     .headcon {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 10px;
     }
+
     .headcon img {
       width: 40px;
       height: 40px;
     }
+
     .card p {
       color: var(--text-light);
       margin: 6px 0 16px 0;
     }
+
     .dropdown-container {
       position: relative;
-      max-width: 400px;
+      max-width: 600px;
       margin-bottom: 30px;
     }
+
     .dropdown-selected {
       padding: 12px;
       border: 1px solid var(--border-gray);
@@ -100,12 +115,14 @@
       cursor: pointer;
       position: relative;
     }
+
     .dropdown-selected::after {
       content: '▼';
       position: absolute;
       right: 12px;
       color: var(--text-dark);
     }
+
     .dropdown-list {
       position: absolute;
       top: 100%;
@@ -120,9 +137,11 @@
       display: none;
       z-index: 100;
     }
+
     .dropdown-list.active {
       display: block;
     }
+
     .dropdown-list input {
       width: 100%;
       padding: 10px;
@@ -131,20 +150,24 @@
       font-size: 14px;
       outline: none;
     }
+
     .dropdown-list ul {
       list-style: none;
       margin: 0;
       padding: 0;
     }
+
     .dropdown-list li {
       padding: 10px;
       cursor: pointer;
       border-bottom: 1px solid var(--border-gray);
     }
+
     .dropdown-list li:hover {
       background-color: var(--accent-orange);
       color: white;
     }
+
     .button2 {
       background-color: var(--alert-red);
       color: white;
@@ -167,7 +190,7 @@
       border-radius: 5px;
       margin: 10px 10px 0 10px;
       cursor: pointer;
-      float: right;
+      margin-left: 365px;
     }
     .button1:hover{
       background-color: var(--alert-red);
@@ -184,37 +207,246 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      margin-top: 10px;
+      margin-top: -330px;
     }
-    .station-list-section {
-      background: var(--bg-white);
+    .search{
+      margin-left: 70px;
+    }
+    .search input{
+      padding: 12px;
+      border: 1px solid var(--border-gray);
       border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      width: 95%;
-      margin: 30px auto;
-      padding: 20px;
-      max-width: 500px;
-    }
-    .station-list-section h2 {
-      margin-bottom: 12px;
-      color: var(--primary-green);
-    }
-    #station-list {
-      list-style: none;
-      padding: 0;
-      max-height: 250px;
-      overflow-y: auto;
-    }
-    #station-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border-gray);
+      background: var(--bg-white);
+      cursor: pointer;
+      width: 400px;
       color: var(--text-dark);
+    }
+    .search button {
+      background-color: var(--bg-white);
+      color: var(--alert-red);
+      border:1px solid var(--alert-red);
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 10px 10px 0 10px;
+      cursor: pointer;
+    }
+    .search button:hover{
+      background-color: var(--alert-red);
+      color: white;
+    }
+
+    /* UPDATED FLEXBOX FOR CARDS */
+    .container1 {
+      background-color: var(--bg-light);
+      width: 95%;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      height: auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: nowrap;
+    }
+
+    .card1 {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      min-width: 120px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+
+ .buscard {
+   background-color: var(--bg-light);
+   width: 95%;
+   margin: 20px auto;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+   height: 80vw;
+ }
+ 
+ .buscard img{
+   width: 50vw;
+   height: 30vw;
+  margin-left: 18vw;
+  border: 1.5px solid #E0E0E0;
+ }
+ 
+ .info{
+   display: flex;
+   justify-content: space-around;
+   gap: 20px;
+   margin-top: 10px;
+ }
+
+.info2{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  
+}
+
+
+    .buscard button {
+      background-color: var(--bg-white);
+      color: var(--alert-red);
+      border:1px solid var(--alert-red);
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 10px 10px 0 10px;
+      cursor: pointer;
+      margin-top: 30px;
+      margin-left: 30vw;
+    }
+    .buscard button:hover{
+      background-color: var(--alert-red);
+      color: white;
+    }
+
+
+ .showroot {
+   background-color: var(--bg-light);
+   width: 95%;
+   margin: 20px auto;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+   height: 120vw;
+ }
+
+
+.top{
+  display: flex;
+  gap: 12px;
+}
+.top button{
+  background-color: var(--primary-green);
+      color: white;
+      border:1px solid white;
+      padding: 6px 3px;
+      border-radius: 5px;
+      
+      cursor: pointer;
+
+}
+.a{
+  width: 88vw;
+  height: 50px;
+  border: 2px solid lightgrey;
+  display: flex;
+  justify-content: space-around;
+}
+.a button{
+  width: 50%;
+  background-color: var(--bg-light);
+  border: none;
+  height: -50px;
+  color: red;
+  
+}
+
+.a button:hover{
+  background-color: var(--alert-red);
+      color: white;
+}
+.priceinfo{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+
+
+
+
+
+   /* body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      padding: 20px;
+    }
+*/
+    .rootshowkro {
+      position: relative;
+      margin-left: 30px;
+      padding-left: 40px;
+      border-left: 4px solid #228B22; /* Primary green metro line color */
+      margin-top: 10vw;
+    }
+
+    .station {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .station::before {
+      content: "";
+      position: absolute;
+      left: -42px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background-color: #228B22; /* Primary green for station marker */
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px #228B22;
+    }
+
+    .station h4 {
+      margin: 0;
+      font-size: 18px;
+      color: #228B22; /* Primary green for station names */
+    }
+
+    .station h6 {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #B22222; /* Alert red for interchange info */
+    }
+
+    .station p {
+      margin: 5px 0;
+      color: #333;
+    }
+
+    .button {
+      padding: 8px 12px;
+      background-color: #228B22; /* Primary green for buttons */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #1a6d1a; /* Darker shade of green for hover effect */
+    }
+
+    /* Example of using alert red for a specific alert message */
+    .alert-message {
+        color: #B22222; /* Alert red */
+        font-weight: bold;
+        margin-top: 10px;
     }
   </style>
 </head>
 <body>
+
   <div class="head">
-    <div class="name"><h1>MetroDekho</h1></div>
+    <div class="name"><h1>BusDekho</h1></div>
     <div class="btn">
       <button type="button">Home</button>
       <button type="button">About</button>
@@ -222,73 +454,136 @@
       <button type="button" class="singup">Sign Up</button>
     </div>
   </div>
+
   <div class="card">
     <div class="headcon">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Delhi_Metro_logo.svg" alt="metro logo" />
-      <h3>Plan your Metro Journey</h3>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dtc_logo.jpg" alt="dtclogo" />
+      <h3>Plan your journey</h3>
     </div>
     <p>Click here to plan through interactive Map</p>
+
     <label for="from">From</label>
     <div class="dropdown-container" id="from-container">
-      <div class="dropdown-selected" onclick="toggleDropdown('from')">Select Metro Station</div>
+      <div class="dropdown-selected" onclick="toggleDropdown('from')">Select Bus Station</div>
       <div class="dropdown-list" id="from-dropdown">
         <input type="text" id="fromSearch" placeholder="Search station..." />
         <ul id="fromOptions"></ul>
       </div>
     </div>
+
     <label for="to">To</label>
     <div class="dropdown-container" id="to-container">
-      <div class="dropdown-selected" onclick="toggleDropdown('to')">Select Metro Station</div>
+      <div class="dropdown-selected" onclick="toggleDropdown('to')">Select Bus Station</div>
       <div class="dropdown-list" id="to-dropdown">
         <input type="text" id="toSearch" placeholder="Search station..." />
         <ul id="toOptions"></ul>
       </div>
     </div>
+
     <h3>Advance Filters</h3>
-    <button class="button2" type="button">Shortest Route</button>
-    <button class="button2" type="button">Minimum Interchange</button>
-    <br><br>
+    <button class="button2" type="submit">Shortest Route</button>
+    <button class="button2" type="submit">Minimum Interchange</button>
+    <br>
+    <br>
+    <br>
     <div class="box">
-      <a href="https://www.delhimetrorail.com/network_map" target="_blank">Delhi Metro Map</a>
-      <button class="button1" type="button">Show Route & Fare</button>
+      <a href="DTC Map">DTC Map</a>
+      <button class="button1" type="submit">Show Route & Fare</button>
+    </div>
+  </div>
+<div class="showroot">
+<div class="top">
+  
+  <button class="button" type="submit">Modify</button>
+  <h4>Harkesh nagar  &#8594; Aiims</h4>
+</div>
+<br>
+<div class="a">
+  <button class="button" type="submit">📍 Minimum interchange</button>
+<hr>
+  <button class="button" type="submit">📍 Shortest  Route</button>
+</div>
+
+<div class="priceinfo">
+<p>Fare: &#8377;499</p>
+<hr>
+<p>Station: &#128647; Rajiv Chowk</p>
+<hr>
+<p>Duration: &#128337; 2 hours</p>  
+</div>
+
+<div class="rootshowkro">
+
+  <div class="station">
+    <h4>Okhla Tank</h4>
+    <button class="button" type="submit">Show all 8 stations</button>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+  </div>
+
+  <div class="station">
+    <h4>AIIMS Tank</h4>
+    <h6>Interchange and pick B.N 420</h6>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+    <p>Govind Puri</p>
+    <p class="alert-message">Expect delays due to maintenance.</p>
+  </div>
+
+  <div class="station">
+    <h4>AIIMS</h4>
+  </div>
+
+</div>
+</div>
+  <div class="search">
+    <input type="text" placeholder="Find Bus Route by Bus Number" name="" id="" value="" />
+    <button class="button3" type="submit">Search</button>
+  </div>
+  
+  <div class="buscard">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dtc_logo.jpg" alt="dtclogo" />
+      
+      <div class="info">
+        <p><strong>Source :</strong>Bus stop</p>
+<p><strong>Route length :</strong>Bus stop</p>
+<p><strong>Destination :</strong>New delhi</p>
+      </div>
+      
+      <div class="info2">
+        <p><strong>• First Bus timings :</strong>Bus stop</p>
+<p><strong>• Last Bus timing:</strong>Bus stop</p>
+<p><strong>• Frequency :</strong>20 min</p>
+      </div>
+      
+      <button class="button" type="submit">Show intermediate</button>
+      <br>
+      <br>
+      <div class="root1">
+        <p>Harkesh nagar &#8594; Aiims &#8594; nehru place&#8594;Govind puri&#8594;Badarpur&#8594;Sarita vihar<p>
+      </div>
+  </div>
+
+  <!-- FLEXBOX CARDS IN A ROW -->
+  <div class="container1">
+    <div class="card1">
+      <h4 class="counter">0</h4>
+      <p>Total station's</p>
+    </div>
+    <div class="card1">
+      <h4 class="counter">0</h4>
+      <p>Total Distance(km)</p>
+    </div>
+    <div class="card1">
+      <h4 class="counter">0</h4>
+      <p>Total line's</p>
     </div>
   </div>
 
-  <div class="station-list-section">
-    <h2>All Delhi Metro Stations</h2>
-    <ul id="station-list">
-      <li>Loading stations...</li>
-    </ul>
-  </div>
-
   <script>
-    // 1. Declare the empty array
-    let stations = [];
-
-    // 2. Fetch station data from a public API (using a CORS proxy)
-    fetch('https://corsproxy.io/?https://delhimetroapi.in/stations')
-      .then(response => response.json())
-      .then(data => {
-        // 3. Populate the stations array
-        stations = data.stations.map(st => st.name);
-        // 4. Update dropdowns
-        renderList(stations, document.getElementById('fromOptions'), 'from');
-        renderList(stations, document.getElementById('toOptions'), 'to');
-        // 5. Show all stations in the list section
-        const ul = document.getElementById('station-list');
-        ul.innerHTML = '';
-        stations.forEach(station => {
-          const li = document.createElement('li');
-          li.textContent = station;
-          ul.appendChild(li);
-        });
-      })
-      .catch(error => {
-        document.getElementById('station-list').innerHTML = '<li style="color:red;">Failed to load stations</li>';
-        console.error('Failed to fetch stations:', error);
-      });
-
-    // Dropdown logic
     function toggleDropdown(type) {
       const dropdown = document.getElementById(`${type}-dropdown`);
       const searchInput = document.getElementById(`${type}Search`);
@@ -297,12 +592,14 @@
       searchInput.value = '';
       renderList(stations, list, type);
       searchInput.focus();
-      searchInput.oninput = function() {
+
+      searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase();
         const filtered = stations.filter(st => st.toLowerCase().includes(query));
         renderList(filtered, list, type);
-      };
+      });
     }
+
     function renderList(data, ulElement, type) {
       ulElement.innerHTML = '';
       data.forEach(station => {
@@ -315,6 +612,7 @@
         ulElement.appendChild(li);
       });
     }
+
     // Close dropdown when clicking outside
     document.addEventListener('click', function (e) {
       ['from', 'to'].forEach(type => {
@@ -324,6 +622,27 @@
         }
       });
     });
+
+    // Animated Counters
+    let counters = document.getElementsByClassName("counter");
+    let maxValues = [1000, 250, 50]; // Change as needed
+
+    for (let i = 0; i < counters.length; i++) {
+      animateCounter(counters[i], maxValues[i], 2); // 2ms delay
+    }
+
+    function animateCounter(element, max, delay) {
+      let current = 0;
+      function update() {
+        if (current < max) {
+          current++;
+          element.innerHTML = current;
+          setTimeout(update, delay);
+        }
+      }
+      update();
+    }
+  
   </script>
 </body>
 </html>
