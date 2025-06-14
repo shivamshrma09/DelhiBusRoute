@@ -584,65 +584,163 @@
   </div>
 
   <script>
-    function toggleDropdown(type) {
-      const dropdown = document.getElementById(`${type}-dropdown`);
-      const searchInput = document.getElementById(`${type}Search`);
-      const list = document.getElementById(`${type}Options`);
-      dropdown.classList.toggle('active');
-      searchInput.value = '';
-      renderList(stations, list, type);
-      searchInput.focus();
 
-      searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        const filtered = stations.filter(st => st.toLowerCase().includes(query));
-        renderList(filtered, list, type);
-      });
-    }
-
-    function renderList(data, ulElement, type) {
-      ulElement.innerHTML = '';
-      data.forEach(station => {
-        const li = document.createElement('li');
-        li.textContent = station;
-        li.onclick = () => {
-          document.querySelector(`#${type}-container .dropdown-selected`).textContent = station;
-          document.getElementById(`${type}-dropdown`).classList.remove('active');
-        };
-        ulElement.appendChild(li);
-      });
-    }
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (e) {
-      ['from', 'to'].forEach(type => {
-        const container = document.getElementById(`${type}-container`);
-        if (!container.contains(e.target)) {
-          document.getElementById(`${type}-dropdown`).classList.remove('active');
-        }
-      });
-    });
-
-    // Animated Counters
-    let counters = document.getElementsByClassName("counter");
-    let maxValues = [1000, 250, 50]; // Change as needed
-
-    for (let i = 0; i < counters.length; i++) {
-      animateCounter(counters[i], maxValues[i], 2); // 2ms delay
-    }
-
-    function animateCounter(element, max, delay) {
-      let current = 0;
-      function update() {
-        if (current < max) {
-          current++;
-          element.innerHTML = current;
-          setTimeout(update, delay);
-        }
-      }
-      update();
-    }
   
-  </script>
+// डेमो स्टेशन लिस्ट (इसे अपनी stations लिस्ट से बदल सकते हैं)
+let stations = [
+  "Harkesh Nagar", "AIIMS", "Nehru Place", "Govind Puri", "Badarpur", "Sarita Vihar", "Rajiv Chowk"
+];
+
+// Bus Number से सर्च (OTD API)
+document.querySelector('.search button').addEventListener('click', function () {
+  const input = document.querySelector('.search input').value.trim();
+  if (!input) {
+    alert('Please enter a bus number!');
+    return;
+  }
+  fetch(`https://api.opentransitdata.com/bus?number=${encodeURIComponent(input)}`, {
+    headers: {
+      'Authorization': 'Bearer 542jhQ6fGL9aqoUgydivd5VPxElgZMQ4'
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.source) {
+        document.querySelector('.buscard .info').innerHTML = `
+          <p><strong>Source :</strong> ${data.source}</p>
+          <p><strong>Route length :</strong> ${data.route_length}</p>
+          <p><strong>Destination :</strong> ${data.destination}</p>
+        `;
+        document.querySelector('.buscard .info2').innerHTML = `
+          <p><strong>• First Bus timings :</strong> ${data.first_bus}</p>
+          <p><strong>• Last Bus timing:</strong> ${data.last_bus}</p>
+          <p><strong>• Frequency :</strong> ${data.frequency}</p>
+        `;
+        if (data.stops && data.stops.length) {
+          document.querySelector('.buscard .root1').innerHTML = data.stops.join(' &#8594; ');
+        } else {
+          document.querySelector('.buscard .root1').innerHTML = '';
+        }
+      } else {
+        document.querySelector('.buscard .info').innerHTML = `<p>No data found for this bus number.</p>`;
+        document.querySelector('.buscard .info2').innerHTML = '';
+        document.querySelector('.buscard .root1').innerHTML = '';
+      }
+    })
+    .catch(() => {
+      document.querySelector('.buscard .info').innerHTML = `<p>API Error. Try again later.</p>`;
+      document.querySelector('.buscard .info2').innerHTML = '';
+      document.querySelector('.buscard .root1').innerHTML = '';
+    });
+});
+
+// "Show Route & Fare" बटन पर From/To स्टेशन से API कॉल
+document.querySelector('.button1').addEventListener('click', function () {
+  const from = document.querySelector('#from-container .dropdown-selected').textContent.trim();
+  const to = document.querySelector('#to-container .dropdown-selected').textContent.trim();
+
+  if (from === 'Select Bus Station' || to === 'Select Bus Station' || from === to) {
+    alert('Please select valid From and To stations!');
+    return;
+  }
+
+  fetch(`https://api.opentransitdata.com/route?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`, {
+    headers: {
+      'Authorization': 'Bearer 542jhQ6fGL9aqoUgydivd5VPxElgZMQ4'
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.route && data.route.length) {
+        document.querySelector('.priceinfo').innerHTML = `
+          <p>Fare: ${data.fare || 'N/A'}</p>
+          <hr>
+          <p>Duration: ${data.duration || 'N/A'}</p>
+          <hr>
+          <p>Interchange: ${data.interchange || 0}</p>
+        `;
+        // Route stations दिखाएँ
+        let stationsHtml = '';
+        data.route.forEach((station, idx) => {
+          stationsHtml += `
+            <div class="station">
+              <h4>${station}</h4>
+              ${idx === 0 ? '<button class="button" type="button">Show all stations</button>' : ''}
+            </div>
+          `;
+        });
+        document.querySelector('.rootshowkro').innerHTML = stationsHtml;
+      } else {
+        document.querySelector('.priceinfo').innerHTML = '<p>No route found.</p>';
+        document.querySelector('.rootshowkro').innerHTML = '';
+      }
+    })
+    .catch(() => {
+      document.querySelector('.priceinfo').innerHTML = '<p>API Error. Try again later.</p>';
+      document.querySelector('.rootshowkro').innerHTML = '';
+    });
+});
+
+// Dropdowns के लिए stations लिस्ट render
+function toggleDropdown(type) {
+  const dropdown = document.getElementById(`${type}-dropdown`);
+  const searchInput = document.getElementById(`${type}Search`);
+  const list = document.getElementById(`${type}Options`);
+  dropdown.classList.toggle('active');
+  searchInput.value = '';
+  renderList(stations, list, type);
+  searchInput.focus();
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = stations.filter(st => st.toLowerCase().includes(query));
+    renderList(filtered, list, type);
+  });
+}
+
+function renderList(data, ulElement, type) {
+  ulElement.innerHTML = '';
+  data.forEach(station => {
+    const li = document.createElement('li');
+    li.textContent = station;
+    li.onclick = () => {
+      document.querySelector(`#${type}-container .dropdown-selected`).textContent = station;
+      document.getElementById(`${type}-dropdown`).classList.remove('active');
+    };
+    ulElement.appendChild(li);
+  });
+}
+
+document.addEventListener('click', function (e) {
+  ['from', 'to'].forEach(type => {
+    const container = document.getElementById(`${type}-container`);
+    if (!container.contains(e.target)) {
+      document.getElementById(`${type}-dropdown`).classList.remove('active');
+    }
+  });
+});
+
+// Animated Counters
+let counters = document.getElementsByClassName("counter");
+let maxValues = [1000, 250, 50]; // Change as needed
+
+for (let i = 0; i < counters.length; i++) {
+  animateCounter(counters[i], maxValues[i], 2); // 2ms delay
+}
+
+function animateCounter(element, max, delay) {
+  let current = 0;
+  function update() {
+    if (current < max) {
+      current++;
+      element.innerHTML = current;
+      setTimeout(update, delay);
+    }
+  }
+  update();
+}
+
+
+</script>
 </body>
 </html>
